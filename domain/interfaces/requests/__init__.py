@@ -1,0 +1,3 @@
+from domain.interfaces.requests.create_failure_request import ICreateFailureRequest
+from domain.interfaces.requests.update_failure_request import IUpdateFailureRequest
+from domain.interfaces.requests.get_failures_request import IGetFailuresRequest

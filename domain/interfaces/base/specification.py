@@ -1,0 +1,2 @@
+class ISpecification:
+    pass

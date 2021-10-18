@@ -1,0 +1,1 @@
+from domain.use_cases.create_failure import CreateFailureUseCase

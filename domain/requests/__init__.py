@@ -1,0 +1,1 @@
+from domain.requests.create_failure_request import CreateFailureRequest

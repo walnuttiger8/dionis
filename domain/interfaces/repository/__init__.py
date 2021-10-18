@@ -1,0 +1,2 @@
+from domain.interfaces.repository.failure_repository import IFailureRepository
+from domain.interfaces.repository.user_repository import IUserRepository
