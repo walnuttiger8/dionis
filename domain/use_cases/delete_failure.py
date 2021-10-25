@@ -1,4 +1,4 @@
-from domain import IResponse, DeleteFailureRequest, IFailureRepository, SuccessResponse
+from domain import IResponse, DeleteFailureRequest, IFailureRepository, SuccessResponse, FailResponse
 from domain.interfaces import IUseCase
 
 
@@ -10,6 +10,9 @@ class DeleteFailureUseCase(IUseCase):
     def execute(self, request: DeleteFailureRequest) -> IResponse:
         user = request.user
         failure = request.failure
+
+        if failure.creator_id != user.id:
+            return FailResponse()
 
         user.delete_failure(failure)
         self._failure_repository.remove(failure.id)
