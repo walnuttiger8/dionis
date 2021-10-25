@@ -1,4 +1,4 @@
-from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase
+from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, UpdateFailureRequest
 from infrastructure import UserRepository, FailureRepository, FailureTextDao
 
 if __name__ == '__main__':
@@ -21,7 +21,13 @@ if __name__ == '__main__':
 
     r = CreateFailureRequest(user, failure)
     u = CreateFailureUseCase(failure_repo, user_repo)
+    update = UpdateFailureUseCase(failure_repo)
 
     u.execute(r)
-    print(user)
-    print(failure)
+    failure.description = "new description"
+    update_request = UpdateFailureRequest(user, failure)
+    update.execute(update_request)
+    # print(user)
+    # print(failure)
+
+    print(failure_repo.get(1))

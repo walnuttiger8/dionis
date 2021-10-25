@@ -5,4 +5,4 @@ class Failure(BaseModel):
     id: int
     name: str
     description: str
-    creator: type('User') = None
+    creator_id: int = None

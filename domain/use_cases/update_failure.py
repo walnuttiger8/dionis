@@ -10,7 +10,7 @@ class UpdateFailureUseCase(IUseCase):
         user = request.user
         failure = request.failure
 
-        if failure.creator != user:
+        if failure.creator_id != user.id:
             return FailResponse()
 
         self._failure_repository.update(failure)

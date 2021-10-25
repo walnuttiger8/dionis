@@ -9,11 +9,15 @@ class FailureTextDao(IFailureDao):
 
     def create(self, failure: Failure) -> None:
         with open(self._filename, self._mode) as f:
-            f.write(failure.name)
+            f.write(failure.json())
             f.write("\n")
 
     def read(self, failure_id: int) -> Failure | None:
-        pass
+        with open(self._filename) as f:
+            for data in f.readlines():
+                failure = Failure.parse_raw(data)
+                if failure.id == failure_id:
+                    return failure
 
     def update(self, failure: Failure) -> None:
         pass

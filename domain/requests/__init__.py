@@ -1,1 +1,3 @@
 from domain.requests.create_failure_request import CreateFailureRequest
+from domain.requests.delete_failure_request import DeleteFailureRequest
+from domain.requests.update_failure_request import UpdateFailureRequest

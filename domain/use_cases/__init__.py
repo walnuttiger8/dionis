@@ -1,1 +1,3 @@
 from domain.use_cases.create_failure import CreateFailureUseCase
+from domain.use_cases.delete_failure import DeleteFailureUseCase
+from domain.use_cases.update_failure import UpdateFailureUseCase

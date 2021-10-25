@@ -10,7 +10,7 @@ class FailureRepository(IFailureRepository):
         self._dao.create(failure)
 
     def get(self, failure_id: int) -> Failure:
-        pass
+        return self._dao.read(failure_id)
 
     def all(self) -> list[Failure]:
         pass
