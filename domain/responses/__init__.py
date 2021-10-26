@@ -3,3 +3,4 @@ from domain.responses.success_reponse import SuccessResponse
 from domain.responses.get_failures_response import GetFailuresResponse
 from domain.responses.user_info_response import UserInfoResponse
 from domain.responses.register_user_response import RegisterUserResponse
+from domain.responses.authorization_response import AuthorizationResponse
