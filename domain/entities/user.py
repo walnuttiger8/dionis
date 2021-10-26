@@ -5,7 +5,6 @@ from domain.entities import Failure
 
 class User(BaseModel):
     id: int
-    name: str
     created_failures: list[Failure] = []
 
     def create_failure(self, failure):
