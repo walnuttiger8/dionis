@@ -1,7 +1,12 @@
 from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, UpdateFailureRequest
 from infrastructure import UserRepository, FailureRepository, FailureTextDao
+import pymssql
 
-if __name__ == '__main__':
+from infrastructure.utils.connection.db.commands.mssql_command import MSSqlCommand
+from infrastructure.utils.connection.db.connections import MSSqlConnection
+
+
+def test():
     user_data = {
         "id": 1,
         "name": "Test",
@@ -31,3 +36,12 @@ if __name__ == '__main__':
     # print(failure)
 
     print(failure_repo.get(1))
+
+
+if __name__ == '__main__':
+    c = MSSqlConnection.TEST_DB.connect()
+    command = MSSqlCommand("""
+    select * from users
+    """)
+    r = c.execute_command(command)
+    print(r)

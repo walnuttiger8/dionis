@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABCMeta
 
-from domain import ISpecification
+from domain.interfaces import ISpecification
 from domain.entities import UserAccount
 
 

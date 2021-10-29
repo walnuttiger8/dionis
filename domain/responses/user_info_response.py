@@ -1,4 +1,5 @@
-from domain import SuccessResponse, UserInfo
+from domain.responses import SuccessResponse
+from domain.entities import UserInfo
 
 
 class UserInfoResponse(SuccessResponse):

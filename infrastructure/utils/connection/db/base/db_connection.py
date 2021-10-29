@@ -1,7 +1,9 @@
 from abc import abstractmethod, ABCMeta
+from .db_command import IDbCommand
 
 
-class DbConnection(metaclass=ABCMeta):
+class IDbConnection(metaclass=ABCMeta):
 
-    def __init__(self, connection_string):
-        self.connection_string = None
+    @abstractmethod
+    def execute_command(self, db_command: IDbCommand) -> None | list:
+        pass
