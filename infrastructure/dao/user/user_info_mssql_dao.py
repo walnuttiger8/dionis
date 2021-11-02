@@ -44,6 +44,18 @@ class UserInfoMSSQLDao(MSSQLDao[UserInfo], IUserInfoDao):
         output = self.db.execute_command(command)
         return self.entity_type(**output[0])
 
+    def from_user_id(self, user_id: int) -> UserInfo | None:
+        # language=SQL
+        query = f"""
+        select top 1 *
+        from {self.table_name}
+        where user_id = {user_id}
+        """
+        command = MSSQLCommand(query)
+        output = self.db.execute_command(command)
+        if output:
+            return UserInfo(**output[0])
+
     def update(self, entity: T) -> None:
         pass
 

@@ -20,6 +20,16 @@ class MSSQLDao(IDao[T], ABC):
     def create(self, entity: T) -> T:
         pass
 
+    def all(self):
+        # language=SQL
+        query = f"""
+        SELECT *
+        FROM {self.table_name}
+        """
+        command = MSSQLCommand(query)
+        output = self.db.execute_command(command)
+        return list(map(lambda e: self.entity_type(**e), output))
+
     @abstractmethod
     def update(self, entity: T) -> None:
         pass

@@ -47,5 +47,29 @@ class UserAccountMSSQLDao(MSSQLDao[UserAccount], IUserAccountDao):
         output = self.db.execute_command(command)
         return UserAccount(**output[0])
 
+    def from_login(self, login: str) -> UserAccount | None:
+        # language=SQL
+        query = f"""
+        select top 1 *
+        from {self.table_name}
+        where login = '{login}'
+        """
+        command = MSSQLCommand(query)
+        output = self.db.execute_command(command)
+        if output:
+            return UserAccount(**output[0])
+
+    def from_user_id(self, user_id: int) -> UserAccount | None:
+        # language=SQL
+        query = f"""
+        select top 1 *
+        from {self.table_name}
+        where user_id = '{user_id}'
+        """
+        command = MSSQLCommand(query)
+        output = self.db.execute_command(command)
+        if output:
+            return UserAccount(**output[0])
+
     def update(self, entity: T) -> None:
         pass
