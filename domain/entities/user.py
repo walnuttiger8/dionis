@@ -4,7 +4,7 @@ from domain.entities import Failure
 
 
 class User(BaseModel):
-    id: int
+    id: int = None
     created_failures: list[Failure] = []
 
     def create_failure(self, failure):

@@ -1,1 +1,1 @@
-from .mssql_connection import MSSqlConnection
+from .mssql_connection import MSSQLConnection

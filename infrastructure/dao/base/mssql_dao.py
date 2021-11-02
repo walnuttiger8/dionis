@@ -1,7 +1,7 @@
 from domain.interfaces.dao.base.dao import IDao, T
 from abc import abstractmethod, ABC
 
-from infrastructure.utils.connection.db import MSSqlConnection, MSSQLCommand
+from infrastructure.utils.connection.db import MSSQLConnection, MSSQLCommand
 
 
 class MSSQLDao(IDao[T], ABC):
@@ -12,7 +12,7 @@ class MSSQLDao(IDao[T], ABC):
     def table_name(self) -> str:
         pass
 
-    def __init__(self, db: MSSqlConnection, entity_type: type):
+    def __init__(self, db: MSSQLConnection, entity_type: type):
         self.db = db
         self.entity_type = entity_type
 

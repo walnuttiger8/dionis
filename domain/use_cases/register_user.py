@@ -16,8 +16,7 @@ class RegisterUserUseCase(IUseCase):
 
     def _create_user(self) -> User:
         user = User()
-        self._user_repository.add(user)
-        return user
+        return self._user_repository.add(user)
 
     def execute(self, request: RegisterUserRequest) -> RegisterUserResponse | FailResponse:
         account = request.user_account
@@ -25,6 +24,7 @@ class RegisterUserUseCase(IUseCase):
 
         validation_msg = self._validate_account(account)
         if validation_msg:
+            print(validation_msg)
             return FailResponse()
 
         user = self._create_user()

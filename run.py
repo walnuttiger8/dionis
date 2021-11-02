@@ -1,9 +1,12 @@
-from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, UpdateFailureRequest, UserAccount
-from infrastructure import UserRepository, FailureRepository, FailureTextDao
-from infrastructure.dao.user import UserAccountMSSQLDao
+from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, \
+    UpdateFailureRequest, UserAccount, RegisterUserRequest, UserInfo
+from domain.use_cases.register_user import RegisterUserUseCase
+from infrastructure import FailureRepository, FailureTextDao, UserInfoMSSQLRepository, UserAccountMSSQLRepository, \
+    UserMSSQLRepository
+from infrastructure.dao.user import UserAccountMSSQLDao, UserInfoMSSQLDao
 
 from infrastructure.dao.user.user_mssql_dao import UserMSSQLDao
-from infrastructure.utils.connection.db.connections import MSSqlConnection
+from infrastructure.utils.connection.db.connections import MSSQLConnection
 
 
 def test():
@@ -20,7 +23,6 @@ def test():
     user = User(**user_data)
     failure = Failure(**failure_data)
 
-    user_repo = UserRepository()
     failure_dao = FailureTextDao()
     failure_repo = FailureRepository(failure_dao)
 
@@ -38,48 +40,36 @@ def test():
     print(failure_repo.get(1))
 
 
-from typing import TypeVar, Generic
+def test_register():
+    user_account_data = {
+        "login": "second_login",
+        "password_hash": "nu_tipa-pa$$word_ha$h))"
+    }
 
-T = TypeVar("T")
+    user_info_data = {
+        "first_name": "Test",
+        "last_name": "Testin",
+        "middle_name": "Test ogli",
+    }
+    connection = MSSQLConnection.TEST_DB.connect()
 
+    user_info_dao = UserInfoMSSQLDao(connection)
+    user_account_dao = UserAccountMSSQLDao(connection)
+    user_dao = UserMSSQLDao(connection)
 
-class Test(Generic[T]):
+    user_info_repository = UserInfoMSSQLRepository(user_info_dao)
+    user_account_repository = UserAccountMSSQLRepository(user_account_dao)
+    user_repository = UserMSSQLRepository(user_dao)
 
-    def __init__(self):
-        self.et = T
-        print("init")
+    user_account = UserAccount.parse_obj(user_account_data)
+    user_info = UserInfo.parse_obj(user_info_data)
 
-    def do(self, obj: T):
-        print("type:", self.et)
+    request = RegisterUserRequest(user_account=user_account, user_info=user_info)
+    use_case = RegisterUserUseCase(user_info_repository, user_account_repository, user_repository)
+
+    response = use_case.execute(request)
+    print(response)
 
 
 if __name__ == '__main__':
-    user_data = {
-        "id": 1,
-        "name": "Test",
-    }
-
-
-    failure_data = {
-        "id": 1,
-        "name": "First",
-        "description": "First failure"
-    }
-    user = User(**user_data)
-    user_account = UserAccount(user_id=1, login="123", password_hash="pswhash")
-    failure = Failure(**failure_data)
-
-    # t: Test[User] = Test[User]()
-    # print(Test[User])
-    # print(t)
-    # t.do(failure)
-    # t.do(user)
-
-    c = MSSqlConnection.TEST_DB.connect()
-    d: UserAccountMSSQLDao = UserAccountMSSQLDao(c)
-    d.init_table()
-    u = d.create(user_account)
-    print(u)
-    # dao = UserMSSQLDao(c)
-    # print(dao.create(User))
-    # print(dao.read(1))
+    test_register()

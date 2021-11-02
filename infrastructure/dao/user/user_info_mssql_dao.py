@@ -3,9 +3,14 @@ from domain.entities import UserInfo
 from infrastructure.dao.base import MSSQLDao
 from infrastructure.dao.base.mssql_dao import T
 from infrastructure.utils.connection.db.commands import MSSQLCommand
+from infrastructure.utils.connection.db import MSSQLConnection
 
 
 class UserInfoMSSQLDao(MSSQLDao[UserInfo], IUserInfoDao):
+
+    def __init__(self, db: MSSQLConnection):
+        super().__init__(db, UserInfo)
+
     @property
     def table_name(self) -> str:
         return "UserInfo"
@@ -38,7 +43,7 @@ class UserInfoMSSQLDao(MSSQLDao[UserInfo], IUserInfoDao):
         (user_id, first_name, last_name, middle_name, birthday)
         OUTPUT INSERTED.*
         VALUES({entity.user_id}, '{entity.first_name}', '{entity.last_name}', '{entity.middle_name}', 
-        '{entity.birthday}')
+        '{entity.birthday or ""}')
         """
         command = MSSQLCommand(query)
         output = self.db.execute_command(command)

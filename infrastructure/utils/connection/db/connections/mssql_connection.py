@@ -3,7 +3,7 @@ from infrastructure.utils.connection.db.commands.mssql_command import MSSQLComma
 from infrastructure.utils.connection.db.credentials import TestDbCredentials
 
 
-class MSSqlConnection(IDbConnection):
+class MSSQLConnection(IDbConnection):
     TEST_DB = TestDbCredentials()
 
     def __init__(self, connection):

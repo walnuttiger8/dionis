@@ -1,1 +1,3 @@
 from .user_mssql_repository import UserMSSQLRepository
+from .user_account_mssql_repository import UserAccountMSSQLRepository
+from .user_info_mssql_repository import UserInfoMSSQLRepository

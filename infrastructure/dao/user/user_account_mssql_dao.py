@@ -2,7 +2,7 @@ from domain import UserAccount
 from domain.interfaces.dao.user_account_dao import IUserAccountDao
 from infrastructure.dao.base import MSSQLDao
 from infrastructure.dao.base.mssql_dao import T
-from infrastructure.utils.connection.db import MSSQLCommand, MSSqlConnection
+from infrastructure.utils.connection.db import MSSQLCommand, MSSQLConnection
 
 
 class UserAccountMSSQLDao(MSSQLDao[UserAccount], IUserAccountDao):
@@ -10,7 +10,7 @@ class UserAccountMSSQLDao(MSSQLDao[UserAccount], IUserAccountDao):
     def all(self) -> list[T]:
         pass
 
-    def __init__(self, db: MSSqlConnection):
+    def __init__(self, db: MSSQLConnection):
         super().__init__(db, UserAccount)
 
     @property

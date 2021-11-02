@@ -11,7 +11,7 @@ class TestDbCredentials(IDbCredentials):
         self._autocommit = True
 
     def connect(self):
-        from infrastructure.utils.connection.db.connections import MSSqlConnection
+        from infrastructure.utils.connection.db.connections import MSSQLConnection
         connection = pymssql.connect(server=self._server, database=self._database, login_timeout=self._login_timeout,
                                      autocommit=self._autocommit)
-        return MSSqlConnection(connection)
+        return MSSQLConnection(connection)
