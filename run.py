@@ -1,8 +1,7 @@
 from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, UpdateFailureRequest
 from infrastructure import UserRepository, FailureRepository, FailureTextDao
-import pymssql
 
-from infrastructure.utils.connection.db.commands.mssql_command import MSSqlCommand
+from infrastructure.dao.user.user_mssql_dao import UserMSSQLDao
 from infrastructure.utils.connection.db.connections import MSSqlConnection
 
 
@@ -38,10 +37,34 @@ def test():
     print(failure_repo.get(1))
 
 
+from typing import TypeVar, Generic
+
+T = TypeVar("T")
+
+
+class Test(Generic[T]):
+
+    def __init__(self):
+        pass
+
+
 if __name__ == '__main__':
+    user_data = {
+        "id": 1,
+        "name": "Test",
+    }
+
+    failure_data = {
+        "id": 1,
+        "name": "First",
+        "description": "First failure"
+    }
+    user = User(**user_data)
+    failure = Failure(**failure_data)
+
     c = MSSqlConnection.TEST_DB.connect()
-    command = MSSqlCommand("""
-    select * from users
-    """)
-    r = c.execute_command(command)
-    print(r)
+    d: UserMSSQLDao = UserMSSQLDao(c)
+    d.create(user)
+    # dao = UserMSSQLDao(c)
+    # print(dao.create(User))
+    # print(dao.read(1))

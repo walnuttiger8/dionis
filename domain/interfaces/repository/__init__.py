@@ -1,3 +1,4 @@
+from domain.interfaces.repository.base import IRepository
 from domain.interfaces.repository.failure_repository import IFailureRepository
 from domain.interfaces.repository.user_repository import IUserRepository
 from domain.interfaces.repository.user_info_repository import IUserInfoRepository
