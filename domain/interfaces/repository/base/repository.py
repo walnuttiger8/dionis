@@ -8,7 +8,7 @@ T = TypeVar("T")
 class IRepository(ABC, Generic[T]):
 
     @abstractmethod
-    def add(self, entity: T) -> None:
+    def add(self, entity: T) -> T:
         pass
 
     @abstractmethod

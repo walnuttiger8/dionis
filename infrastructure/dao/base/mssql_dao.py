@@ -1,24 +1,23 @@
-from domain.interfaces.dao.base import IDao
+from domain.interfaces.dao.base.dao import IDao, T
 from abc import abstractmethod, ABC
-from typing import TypeVar
 
-from infrastructure.utils.connection.db import MSSqlConnection, MSSqlCommand
-
-T = TypeVar("T")
+from infrastructure.utils.connection.db import MSSqlConnection, MSSQLCommand
 
 
 class MSSQLDao(IDao[T], ABC):
+    entity_type: type
 
     @property
     @abstractmethod
     def table_name(self) -> str:
         pass
 
-    def __init__(self, db: MSSqlConnection):
-        self._db = db
+    def __init__(self, db: MSSqlConnection, entity_type: type):
+        self.db = db
+        self.entity_type = entity_type
 
     @abstractmethod
-    def create(self, entity: T) -> None:
+    def create(self, entity: T) -> T:
         pass
 
     @abstractmethod
@@ -32,18 +31,18 @@ class MSSQLDao(IDao[T], ABC):
         FROM {self.table_name} 
         WHERE Id = {entity_id}
         """
-        command = MSSqlCommand(query)
-        result = self._db.execute_command(command)
+        command = MSSQLCommand(query)
+        result = self.db.execute_command(command)
         if not result:
             return
-        return T(**result[0])
+        return self.entity_type(**result[0])
 
     def delete(self, entity_id: int) -> None:
         # language=SQL
         query = f"""
         DELETE *
         FROM {self.table_name} 
-        WHERE Id = {entity_id}
+        WHERE id = {entity_id}
         """
-        command = MSSqlCommand(query)
-        self._db.execute_command(command)
+        command = MSSQLCommand(query)
+        self.db.execute_command(command)

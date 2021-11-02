@@ -1,1 +1,1 @@
-from .mssql_command import MSSqlCommand
+from .mssql_command import MSSQLCommand

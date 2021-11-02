@@ -7,7 +7,7 @@ T = TypeVar("T")
 class IDao(ABC, Generic[T]):
 
     @abstractmethod
-    def create(self, entity: T) -> None:
+    def create(self, entity: T) -> T:
         pass
 
     @abstractmethod
@@ -20,4 +20,8 @@ class IDao(ABC, Generic[T]):
 
     @abstractmethod
     def delete(self, entity_id: int) -> None:
+        pass
+
+    @abstractmethod
+    def all(self) -> list[T]:
         pass

@@ -5,7 +5,7 @@ class UserAccount(BaseModel):
     """
     Entity for authorization and registration
     """
-    id: int
+    id: int = None
     user_id: int
     login: str
     password_hash: str

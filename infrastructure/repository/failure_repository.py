@@ -6,8 +6,8 @@ class FailureRepository(IFailureRepository):
     def __init__(self, dao: IFailureDao):
         self._dao = dao
 
-    def add(self, failure: Failure) -> None:
-        self._dao.create(failure)
+    def add(self, failure: Failure) -> Failure:
+        return self._dao.create(failure)
 
     def get(self, failure_id: int) -> Failure:
         return self._dao.read(failure_id)

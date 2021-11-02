@@ -1,5 +1,6 @@
-from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, UpdateFailureRequest
+from domain import User, Failure, CreateFailureRequest, CreateFailureUseCase, UpdateFailureUseCase, UpdateFailureRequest, UserAccount
 from infrastructure import UserRepository, FailureRepository, FailureTextDao
+from infrastructure.dao.user import UserAccountMSSQLDao
 
 from infrastructure.dao.user.user_mssql_dao import UserMSSQLDao
 from infrastructure.utils.connection.db.connections import MSSqlConnection
@@ -45,7 +46,11 @@ T = TypeVar("T")
 class Test(Generic[T]):
 
     def __init__(self):
-        pass
+        self.et = T
+        print("init")
+
+    def do(self, obj: T):
+        print("type:", self.et)
 
 
 if __name__ == '__main__':
@@ -54,17 +59,27 @@ if __name__ == '__main__':
         "name": "Test",
     }
 
+
     failure_data = {
         "id": 1,
         "name": "First",
         "description": "First failure"
     }
     user = User(**user_data)
+    user_account = UserAccount(user_id=1, login="123", password_hash="pswhash")
     failure = Failure(**failure_data)
 
+    # t: Test[User] = Test[User]()
+    # print(Test[User])
+    # print(t)
+    # t.do(failure)
+    # t.do(user)
+
     c = MSSqlConnection.TEST_DB.connect()
-    d: UserMSSQLDao = UserMSSQLDao(c)
-    d.create(user)
+    d: UserAccountMSSQLDao = UserAccountMSSQLDao(c)
+    d.init_table()
+    u = d.create(user_account)
+    print(u)
     # dao = UserMSSQLDao(c)
     # print(dao.create(User))
     # print(dao.read(1))

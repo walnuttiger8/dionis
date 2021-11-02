@@ -1,2 +1,2 @@
 from infrastructure.repository.failure_repository import FailureRepository
-from infrastructure.repository.user_repository import UserRepository
+from infrastructure.repository.user.user_mssql_repository import UserRepository
